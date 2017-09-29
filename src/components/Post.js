@@ -22,13 +22,13 @@ class Post extends React.Component{
               <FaAngleDown size={30} />
             </div>
           </div>
-          <div className='postTitle'>
+          <div className='post-title'>
             <div>
               <a href='#post' className='postTitle'>
                 {this.props.title}
               </a>
               { this.props.category &&
-                <span> in <a href='#cat' className='postCategory'>{this.props.category}</a>
+                <span> in <a href='#cat' className='post-category'>{this.props.category}</a>
                 </span>
               }
             </div>
@@ -36,8 +36,8 @@ class Post extends React.Component{
               Submitted {Math.floor((Date.now() - this.props.date)/60)} min ago by {this.props.author}
             </div>
             <div>
-              <FaEdit size={30} />
-              <FaTrashO size={30} />
+              <FaEdit size={20} />
+              <FaTrashO size={20} />
             </div>
           </div>
         </div>

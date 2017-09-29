@@ -1,9 +1,11 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import Post from './Post'
+import * as API from '../utils/api'
+import {fetchAllPosts} from '../actions'
 
-function Posts () {
-  //const posts =
-  const props = {posts: [
+class Posts extends React.Component  {
+  state = {posts: [
     {title: 'new world champion',
     category: 'basket weaving',
     date: Date.now()-10,
@@ -17,26 +19,54 @@ function Posts () {
     author: 'Sheila'
   }]}
 
-  return (
+
+
+  componentDidMount () {
+    this.props.updatePosts()
+  }
+
+  render () {
+    return (
     <div className='container'>
       Sort by
       <button>Posted</button>
       <button>Likes</button>
-      <div className='postList'>
-        {props.posts.map(({title, category, author, likes, date}) => (
-          <Post
-            title={title}
-            author={author}
-            likes={likes}
-            category={category}
-            date={date}
-            key={title}
-          />
+      <ul className='post-list'>
+        {this.state.posts.map(({title, category, author, likes, date}) => (
+          <li key={title}>
+            <Post
+              title={title}
+              author={author}
+              likes={likes}
+              category={category}
+              date={date}
+            />
+          </li>
         )
         )}
-      </div>
+      </ul>
     </div>
-  )
+  )}
 }
 
-export default Posts
+// const updatePosts = () => dispatch => {
+//   return API.fetchAllPosts().then(
+//     posts => dispatch(getAllPosts({posts})),
+//     error => dispatch(console.log(error))
+//   )
+// }
+
+const mapStateToProps = (state) => {
+  return {posts: state.posts}
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updatePosts: () => dispatch(
+      console.log('boo'),
+      fetchAllPosts())
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Posts)

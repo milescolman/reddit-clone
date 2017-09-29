@@ -1,3 +1,4 @@
+
 const api = "http://localhost:3001"
 
 // Generate a unique token
@@ -10,7 +11,9 @@ const headers = {
   'Authorization': token
 }
 
-export const get = () =>
-  fetch(`${api}/categories`, { headers })
-    .then(res => res.json())
-    
+export const fetchAllPosts = () =>
+  fetch(`${api}/posts`, { headers })
+    .then(
+      res => res.json(),
+      error => console.log(error))
+    .then(data => console.log(data))

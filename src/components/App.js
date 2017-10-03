@@ -24,7 +24,7 @@ class RedditApp extends React.Component {
             <Route exact
               path='/'
               render={() => (
-                <Posts posts={this.props.posts}/>
+                <Posts />
               )}
             />
             <Route component={NotFound}/>

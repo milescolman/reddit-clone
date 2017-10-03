@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
@@ -33,10 +34,10 @@ class Post extends React.Component{
               }
             </div>
             <div>
-              Submitted {Math.floor((Date.now() - this.props.date)/60)} min ago by {this.props.author}
-            </div>
-            <div>
-              <FaEdit size={20} />
+              Submitted {moment(this.props.timestamp).fromNow()} by {this.props.author}
+              </div>
+              <div>
+                <FaEdit size={20} />
               <FaTrashO size={20} />
             </div>
           </div>

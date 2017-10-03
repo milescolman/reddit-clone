@@ -1,3 +1,4 @@
+const uuidv1 = require('uuid/v1');
 
 const api = "http://localhost:3001"
 
@@ -14,6 +15,32 @@ const headers = {
 export const fetchAllPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(
+     res => res.json(),
+     error => alert(`Error in fetching all posts: ${error}`))
+
+export const fetchCategories = () =>
+  fetch(`${api}/categories`, { headers })
+    .then(
       res => res.json(),
-      error => console.log(error))
-    .then(data => console.log(data))
+      error => alert( `Error in fetching categories: ${error}`)
+    )
+
+export const fetchCategoryPosts = (category) =>
+  fetch(`${api}/${category}/posts`, { headers })
+    .then(
+      res => res.json(),
+      error => alert(`Error in fetching category ${category}: ${error}`)
+    )
+
+export const addNewPost = ({title='No title', body='No body', author='No one', category='Uncategorized'}) =>
+  fetch(`${api}/posts`, {
+    method: "POST",
+    headers,
+    id: uuidv1(),
+    timestamp: Date.now(),
+    title,
+    body,
+    author,
+    category})
+
+// TODO: below POST /posts in localhost:3001 

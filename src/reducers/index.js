@@ -4,15 +4,17 @@ import {
   RECEIVE_ALL_POSTS,
 } from '../actions'
 
+// const initialState = {
+//   posts: []
+// }
 
-function posts (state = {}, action) {
-  const { posts } = action
+function posts (state = [], action) {
   switch (action.type) {
     case RECEIVE_ALL_POSTS:
-      return {
-        ...state,
-        posts: posts,
-      }
+      const { posts } = action
+      return [
+        ...posts
+      ]
     default:
       return state
   }

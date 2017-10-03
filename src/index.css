@@ -38,3 +38,7 @@ body, .app {
 .post-title {
   display: inline-block;
 }
+
+.selected-btn {
+  font-weight: bold;
+}

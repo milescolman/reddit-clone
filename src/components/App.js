@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
+  Redirect,
   Route
 }
 from 'react-router-dom'
 
-import Posts from './Posts'
 import Categories from './Categories'
 import NotFound from './NotFound'
+import Posts from './Posts'
+import SinglePostWrapper from './SinglePostWrapper'
+import NewPost from './NewPost'
 
 class RedditApp extends React.Component {
 
@@ -24,6 +27,7 @@ class RedditApp extends React.Component {
                 <div className='container'>
                   <Categories />
                   <Posts />
+                  <NewPost />
                 </div>
               )}
             />
@@ -35,18 +39,28 @@ class RedditApp extends React.Component {
             />
             <Route exact
               path='/'
-              render={() => (
-                <div className='container'>
-                  <Categories />
-                  <Posts />
-                </div>
-              )}
+              render={() =>
+                <Redirect to={{
+                  pathname: '/posts'
+                }}/>
+              }
             />
-            <Route path="/:category/posts"
+            <Route
+              path="/:category/posts"
               render={props => (
                 <div className='container'>
                   <Categories />
                   <Posts {...props}/>
+                  <NewPost />
+                </div>
+              )}
+            />
+            <Route
+              path="/posts/:id"
+              render={props => (
+                <div className='container'>
+                  <Categories />
+                  <SinglePostWrapper {...props}/>
                 </div>
               )}
             />

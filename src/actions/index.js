@@ -4,7 +4,7 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECEIVE_ALL_POSTS = 'GET_ALL_POSTS'
 export const RECEIVE_CATEGORY_POSTS = 'RECEIVE_CATEGORY_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
-
+export const RECEIVE_POST = 'RECEIVE_POST'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -31,7 +31,6 @@ export const receiveAllPosts = (posts) => ({
 export const fetchCategoryPosts = (category) => dispatch => (
   API
     .fetchCategoryPosts(category)
-//    .then(data => console.log(data))
     .then(data => dispatch(receiveCategoryPosts(data)))
 )
 
@@ -46,7 +45,19 @@ export const sendNewPost = (post) => dispatch => (
     .then(data => dispatch(confirmNewPost(data)))
 )
 
+// nothing return from server, so this function is useless
 export const confirmNewPost = (post) => ({
   type: ADD_NEW_POST,
   post
+})
+
+export const fetchPost = (id) => dispatch => (
+  API
+    .fetchPost(id)
+    .then(data => dispatch(receivePost(data)))
+)
+
+export const receivePost = (post) => ({
+  type: RECEIVE_POST,
+  posts: [post]
 })

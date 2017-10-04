@@ -9,6 +9,7 @@ if (!token)
 
 const headers = {
   'Accept': 'application/json',
+  'Content-Type':'application/json',
   'Authorization': token
 }
 
@@ -32,15 +33,27 @@ export const fetchCategoryPosts = (category) =>
       error => alert(`Error in fetching category ${category}: ${error}`)
     )
 
-export const addNewPost = ({title='No title', body='No body', author='No one', category='Uncategorized'}) =>
-  fetch(`${api}/posts`, {
+export const addNewPost = (postBody) =>
+  (
+    fetch(`${api}/posts`, {
     method: "POST",
     headers,
-    id: uuidv1(),
-    timestamp: Date.now(),
-    title,
-    body,
-    author,
-    category})
+    body: JSON.stringify({
+      title: 'No title',
+      body: 'No body',
+      author: 'No one',
+      category: 'Uncategorized',
+      id: uuidv1(),
+      timestamp: Date.now(),
+      ...postBody,
+    }),
+}))
 
-// TODO: below POST /posts in localhost:3001 
+export const fetchPost = (id) =>
+  fetch(`${api}/posts/${id}`, { headers})
+    .then(
+      res => res.json(),
+      error => alert(`Error in fetching post id ${id}: ${error}`)
+    )
+
+// TODO: below GET /posts/:id in localhost:3001

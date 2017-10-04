@@ -29,10 +29,10 @@ class Posts extends React.Component  {
     return (
     <div className='container'>
       {this.props.match ? <h1>{this.props.match.params.category}</h1>: ''}
-      Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
+      <span className='error'>Sort by (broken)</span> <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
         { this.props.posts.sort(this.sortFunction).map(({title, category, author, voteScore, timestamp, id}) => (
-          <li key={title}>
+          <li key={id}>
             <Post
               title={title}
               author={author}

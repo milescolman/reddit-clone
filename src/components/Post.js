@@ -35,18 +35,18 @@ class Post extends React.Component{
             </div>
             <div>
               Submitted {moment(this.props.timestamp).fromNow()} by {this.props.author}
+            </div>
+            { this.props.body &&
+              <div className='body'>
+                {this.props.body}
               </div>
-              <div>
-                <FaEdit size={20} />
+            }
+            <div>
+              <FaEdit size={20} />
               <FaTrashO size={20} />
             </div>
           </div>
         </div>
-        { this.props.body &&
-          <div className='body'>
-            {this.props.body}
-          </div>
-        }
       </div>
     )
     }

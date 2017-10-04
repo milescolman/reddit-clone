@@ -5,7 +5,6 @@ import {fetchCategories} from '../actions'
 
 class Categories extends React.Component {
   componentDidMount () {
-    console.log('fetching categories')
     this.props.fetchCategories()
   }
 

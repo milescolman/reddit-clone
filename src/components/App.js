@@ -8,6 +8,7 @@ import {
 from 'react-router-dom'
 
 import Posts from './Posts'
+import Categories from './Categories'
 import NotFound from './NotFound'
 
 class RedditApp extends React.Component {
@@ -19,12 +20,34 @@ class RedditApp extends React.Component {
           <Switch>
             <Route exact
               path='/posts'
-              component={Posts}
+              render={() => (
+                <div className='container'>
+                  <Categories />
+                  <Posts />
+                </div>
+              )}
+            />
+            <Route exact
+              path='/categories'
+              render={() => (
+                <Categories />
+              )}
             />
             <Route exact
               path='/'
               render={() => (
-                <Posts />
+                <div className='container'>
+                  <Categories />
+                  <Posts />
+                </div>
+              )}
+            />
+            <Route path="/:category/posts"
+              render={props => (
+                <div className='container'>
+                  <Categories />
+                  <Posts {...props}/>
+                </div>
               )}
             />
             <Route component={NotFound}/>

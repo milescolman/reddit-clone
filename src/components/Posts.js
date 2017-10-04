@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Post from './Post'
-import {fetchAllPosts} from '../actions'
+import {fetchAllPosts, fetchCategoryPosts} from '../actions'
 
 class Posts extends React.Component  {
   constructor(props) {
@@ -11,8 +11,10 @@ class Posts extends React.Component  {
   state = {sortFunction: 'likes'}
 
   componentDidMount () {
-    console.log('this.props.updatePosts()')
-    this.props.updatePosts()
+    console.log(this.props.match)
+    this.props.match ?
+      this.props.fetchCategoryPosts(this.props.match.params.category)
+      : this.props.updatePosts()
   }
 
   sortFunction (postA, postB) {
@@ -26,16 +28,18 @@ class Posts extends React.Component  {
   render () {
     return (
     <div className='container'>
+      {this.props.match ? <h1>{this.props.match.params.category}</h1>: ''}
       Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
-        { this.props.posts.sort(this.sortFunction).map(({title, category, author, voteScore, timestamp}) => (
+        { this.props.posts.sort(this.sortFunction).map(({title, category, author, voteScore, timestamp, id}) => (
           <li key={title}>
             <Post
               title={title}
               author={author}
               likes={voteScore}
-              category={category}
+              category={this.props.match ? '' : category}
               date={timestamp}
+              id={id}
             />
           </li>
         )
@@ -51,7 +55,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePosts: () => dispatch(fetchAllPosts())
+    updatePosts: () => dispatch(fetchAllPosts()),
+    fetchCategoryPosts: (cat) => dispatch(fetchCategoryPosts(cat))
   }
 }
 export default connect(

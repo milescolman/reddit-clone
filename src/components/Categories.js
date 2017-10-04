@@ -1,17 +1,37 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
-function Categories (props) {
-  return (
-    <div className='container'>
-      <h1>Categories</h1>
-      Sort by <button>Posted</button>
-      <button>Likes</button>
-      {props.categories.map(category => (
-        <div className='category'>
-          <h2>{category}</h2>
-        </div>
-      ))}
-    </div>
-  )}
+import {fetchCategories} from '../actions'
 
-  export default Categories
+class Categories extends React.Component {
+  componentDidMount () {
+    console.log('fetching categories')
+    this.props.fetchCategories()
+  }
+
+  render () {
+        return (
+          <div className='container'>
+            {this.props.categories.map(({name}) => (
+              <ul key={name} className='category-list'>
+                <li className='category'><a href={`/${name}/posts`}>{name}</a></li>
+              </ul>
+            ))}
+          </div>
+        )
+  }
+
+}
+const mapStateToProps = (state) => {
+  return {categories: state.categories}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCategories: () => dispatch(fetchCategories())
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Categories)

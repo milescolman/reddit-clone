@@ -25,11 +25,11 @@ class Post extends React.Component{
           </div>
           <div className='post-title'>
             <div>
-              <a href='#post' className='postTitle'>
+              <a href={`/posts/${this.props.id}`} className='postTitle'>
                 {this.props.title}
               </a>
               { this.props.category &&
-                <span> in <a href='#cat' className='post-category'>{this.props.category}</a>
+                <span> in <a href={`/${this.props.category}/posts`} className='post-category'>{this.props.category}</a>
                 </span>
               }
             </div>

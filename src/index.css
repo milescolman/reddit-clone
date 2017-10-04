@@ -33,6 +33,14 @@ body, .app {
   padding-top: 10px;
 }
 
+.new-post {
+    position: fixed;
+    bottom: 0%;
+    left: 0%;
+    width: 100%;
+    background: #ffa;
+}
+
 .likes {
   display: inline-block;
   vertical-align: top;

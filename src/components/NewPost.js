@@ -47,8 +47,8 @@ class NewPost extends React.Component {
   }
 
   render = () => (
-    <div className='container'>
-      <h2>New Post</h2>
+    <div className='new-post'>
+      <h3>New Post <span className='error'>fix overlap of posts </span></h3>
       <form onSubmit={this.handleSubmit}>
         <label>Title: <input name="title" placeholder="post title" value={this.state.title} onChange={this.handleTitle}/></label>
         <label>Author: <input name="author" placeholder="your username" value={this.state.author} onChange={this.handleAuthor}/></label>
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => (
       dispatch(sendNewPost(post)),
-      dispatch(fetchAllPosts())
+      dispatch(fetchAllPosts()) //could update redux state of posts directly here to reduce api calls
   ),
   }
 }

@@ -1,10 +1,12 @@
 import React from 'react'
-import moment from 'moment'
+//import moment from 'moment'
 
 import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
-import FaEdit from 'react-icons/lib/fa/edit'
 import FaTrashO from 'react-icons/lib/fa/trash-o'
+import FaEdit from 'react-icons/lib/fa/edit'
+import moment from 'moment'
+
 
 class Post extends React.Component{
 
@@ -34,7 +36,7 @@ class Post extends React.Component{
               }
             </div>
             <div>
-              Submitted {moment(this.props.timestamp).fromNow()} by {this.props.author}
+              Submitted {moment(this.props.date).fromNow()} by {this.props.author}
             </div>
             { this.props.body &&
               <div className='body'>

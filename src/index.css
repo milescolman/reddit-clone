@@ -41,6 +41,10 @@ body, .app {
     background: #ffa;
 }
 
+.edit-post-form {
+  outline: 1px solid black;
+}
+
 .likes {
   display: inline-block;
   vertical-align: top;

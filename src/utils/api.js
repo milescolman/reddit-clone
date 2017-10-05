@@ -68,4 +68,10 @@ export const voteOnPost = ({id, option}) => (
     )
 )
 
-// TODO: below GET /posts/:id in localhost:3001
+export const editPost = ({id, title, body}) => (
+  fetch(`${api}/posts/${id}`,{
+    headers,
+    method: 'PUT',
+    body: JSON.stringify({title, body})
+  })
+)

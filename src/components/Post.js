@@ -7,9 +7,31 @@ import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
 import moment from 'moment'
 
-import {voteOnPost} from '../actions'
+import {
+  voteOnPost,
+  editPost
+} from '../actions'
 
 class Post extends React.Component{
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      modalEditOpen: false,
+      title: this.props.title,
+      body: this.props.body, //need this body param all the tim   e
+    }
+
+  }
+  //arrow functions so don't need this bound in constructor. yay!
+  setModalEditOpen = () => this.setState({modalEditOpen: true})
+  setModalEditClosed = () => this.setState({modalEditOpen: false})
+  toggleModalEdit = () => this.setState({modalEditOpen: !this.state.modalEditOpen})
+  updateField = (event, key) => this.setState({[key]: event.target.value})
+  submitEdit = (event) => (
+    event.preventDefault(),
+    this.props.editPost({id: this.props.id, body: this.state.body, title: this.state.title})
+  )
 
   render  ()  {
     return (
@@ -46,9 +68,17 @@ class Post extends React.Component{
               </div>
             }
             <div>
-              <FaEdit size={20} />
+              <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={20} /></button>
               <FaTrashO size={20} />
             </div>
+            { this.state.modalEditOpen ?
+              <form className='edit-post-form' onSubmit={this.submitEdit}>
+                <label>Title: <input value={this.state.title} onChange={(event) => this.updateField(event, 'title')}/></label>
+                <label>Body: <input value={this.state.body} onChange={(event) => this.updateField(event, 'body')}/></label>
+                <input type='submit' value='Submit'/>
+                <button onClick={this.setModalEditClosed}>Cancel</button>
+              </form>
+            : ''}
           </div>
         </div>
       </div>
@@ -59,6 +89,7 @@ class Post extends React.Component{
 const mapDispatchToProps = (dispatch) => {
   return {
     voteOnPost: (postObj) => dispatch(voteOnPost(postObj)),
+    editPost: (editObj) => dispatch(editPost(editObj))
   }
 }
 export default connect(

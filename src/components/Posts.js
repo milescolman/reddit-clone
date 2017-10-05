@@ -6,6 +6,7 @@ import {fetchAllPosts, fetchCategoryPosts} from '../actions'
 class Posts extends React.Component  {
   constructor(props) {
     super(props)
+
     this.sortFunction = this.sortFunction.bind(this)
   }
   state = {sortFunction: 'likes'}
@@ -31,17 +32,18 @@ class Posts extends React.Component  {
       <span className='error'>Sort by (broken)</span> <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
         {/* removed .sort(this.sortFunction) from below */}
-        { this.props.posts.map(({title, category, author, voteScore, timestamp, id}) => (
+        { this.props.posts.map(({title, category, author, voteScore, timestamp, id, body}) => (
           // remove title below once posts all have id field set
-          <li key={id || title}>
-            <Post
-              title={title}
-              author={author}
-              likes={voteScore}
-              category={this.props.match ? '' : category}
-              date={timestamp}
-              id={id}
-            />
+            <li key={id || title}>
+              <Post
+                title={title}
+                author={author}
+                likes={voteScore}
+                category={this.props.match ? '' : category}
+                date={timestamp}
+                id={id}
+                body={body}
+              />
           </li>
         )
         )}

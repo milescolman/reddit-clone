@@ -6,6 +6,7 @@ export const RECEIVE_CATEGORY_POSTS = 'RECEIVE_CATEGORY_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const CONFIRM_VOTE = 'CONFIRM_VOTE'
+export const CONFIRM_EDIT_POST = 'CONFIRM_EDIT_POST'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -72,4 +73,15 @@ export const voteOnPost = (voteObj) => dispatch => (
 export const confirmVote = (voteObj) => ({
   type: CONFIRM_VOTE,
   ...voteObj
+})
+
+export const editPost = (editObj) => dispatch => (
+  API
+    .editPost(editObj)
+    .then(data => dispatch(confirmEdit(editObj)))
+)
+
+export const confirmEdit = (editObj) => ({
+  type: CONFIRM_EDIT_POST,
+  ...editObj
 })

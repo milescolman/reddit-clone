@@ -5,7 +5,8 @@ import {
   RECEIVE_CATEGORIES,
   RECEIVE_CATEGORY_POSTS,
   RECEIVE_POST,
-  CONFIRM_VOTE
+  CONFIRM_VOTE,
+  CONFIRM_EDIT_POST
 } from '../actions'
 
 function posts (state = [], action) {
@@ -26,6 +27,16 @@ function posts (state = [], action) {
               voteScore: post.voteScore += (option === 'upVote') ? 1 : -1
             }
         ))
+    case CONFIRM_EDIT_POST:
+      const { editID, title, body} = action
+      return state.map((post) => (
+        (post.id !== editID) ? //id defined above...
+          post :
+          {...post,
+          title,
+          body
+        }
+      ))
     default:
       return state
   }

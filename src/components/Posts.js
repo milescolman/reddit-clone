@@ -11,7 +11,6 @@ class Posts extends React.Component  {
   state = {sortFunction: 'likes'}
 
   componentDidMount () {
-    console.log(this.props.match)
     this.props.match ?
       this.props.fetchCategoryPosts(this.props.match.params.category)
       : this.props.updatePosts()
@@ -31,7 +30,8 @@ class Posts extends React.Component  {
       {this.props.match ? <h1>{this.props.match.params.category}</h1>: ''}
       <span className='error'>Sort by (broken)</span> <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
-        { this.props.posts.sort(this.sortFunction).map(({title, category, author, voteScore, timestamp, id}) => (
+        {/* removed .sort(this.sortFunction) from below */}
+        { this.props.posts.map(({title, category, author, voteScore, timestamp, id}) => (
           // remove title below once posts all have id field set
           <li key={id || title}>
             <Post

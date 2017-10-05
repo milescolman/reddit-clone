@@ -56,4 +56,16 @@ export const fetchPost = (id) =>
       error => alert(`Error in fetching post id ${id}: ${error}`)
     )
 
+export const voteOnPost = ({id, option}) => (
+  fetch(`${api}/posts/${id}`,{
+    headers,
+    method: 'POST',
+    body: JSON.stringify({option})
+  })
+    .then(
+      res => res.json(),
+      error => alert(`Error in voting on post id ${id}: ${error}`)
+    )
+)
+
 // TODO: below GET /posts/:id in localhost:3001

@@ -5,6 +5,7 @@ export const RECEIVE_ALL_POSTS = 'GET_ALL_POSTS'
 export const RECEIVE_CATEGORY_POSTS = 'RECEIVE_CATEGORY_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
+export const CONFIRM_VOTE = 'CONFIRM_VOTE'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -45,7 +46,7 @@ export const sendNewPost = (post) => dispatch => (
     .then(data => dispatch(confirmNewPost(data)))
 )
 
-// nothing return from server, so this function is useless
+// nothing return from server, so this function should have argument prefilled above
 export const confirmNewPost = (post) => ({
   type: ADD_NEW_POST,
   post
@@ -60,4 +61,15 @@ export const fetchPost = (id) => dispatch => (
 export const receivePost = (post) => ({
   type: RECEIVE_POST,
   posts: [post]
+})
+
+export const voteOnPost = (voteObj) => dispatch => (
+  API
+    .voteOnPost(voteObj)
+    .then(data => dispatch(confirmVote(voteObj)))
+)
+
+export const confirmVote = (voteObj) => ({
+  type: CONFIRM_VOTE,
+  ...voteObj
 })

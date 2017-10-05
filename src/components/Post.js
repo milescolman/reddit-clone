@@ -1,5 +1,5 @@
 import React from 'react'
-//import moment from 'moment'
+import {connect} from 'react-redux'
 
 import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
@@ -7,6 +7,7 @@ import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
 import moment from 'moment'
 
+import {voteOnPost} from '../actions'
 
 class Post extends React.Component{
 
@@ -15,15 +16,16 @@ class Post extends React.Component{
       <div className='post'>
         <div>
           <div className='likes'>
-            <div className='arrow'>
+            <button className='arrow'
+              onClick={() => this.props.voteOnPost({id: this.props.id, option: 'upVote'})}>
               <FaAngleUp size={30} />
-            </div>
+            </button>
             <div>
               {this.props.likes}
             </div>
-            <div className='arrow'>
+            <button className='arrow' onClick={() => this.props.voteOnPost({id: this.props.id, option: 'downVote'})}>
               <FaAngleDown size={30} />
-            </div>
+            </button>
           </div>
           <div className='post-title'>
             <div>
@@ -54,4 +56,12 @@ class Post extends React.Component{
     }
 
 }
-export default Post
+const mapDispatchToProps = (dispatch) => {
+  return {
+    voteOnPost: (postObj) => dispatch(voteOnPost(postObj)),
+  }
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(Post)

@@ -12,7 +12,7 @@ class NewPost extends React.Component {
     this.state = {
       title: '',
       author: '',
-      category: '',
+      category: 'Select a Category',
       body: '',
       error: '',
     }
@@ -24,7 +24,7 @@ class NewPost extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     /* input validation */
-    if (!this.state.title || !this.state.author || !this.state.category || !this.state.body) {
+    if (!this.state.title || !this.state.author || this.state.category === 'Select a Category' || !this.state.body) {
       this.setState({error: 'All fields are required.'})
       return
     }
@@ -32,7 +32,7 @@ class NewPost extends React.Component {
     this.setState({
       title: '',
       author: '',
-      category: '',
+      category: 'Select a Category',
       body: '',
       error: '',
     })

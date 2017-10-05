@@ -7,9 +7,8 @@ class Posts extends React.Component  {
   constructor(props) {
     super(props)
 
-    this.sortFunction = this.sortFunction.bind(this)
+    this.state = {sortFunction: 'likes'}
   }
-  state = {sortFunction: 'likes'}
 
   componentDidMount () {
     this.props.match ?
@@ -17,10 +16,22 @@ class Posts extends React.Component  {
       : this.props.updatePosts()
   }
 
-  sortFunction (postA, postB) {
-    return (this.state.sortFunction === 'likes') ?
-       postA.voteScore < postB.voteScore
-    :  postA.timestamp < postB.timestamp
+  sortFunction = (postA, postB) => {
+    if (this.state.sortFunction === 'likes') {
+       if  (postA.voteScore < postB.voteScore) {
+           return 1
+       } else if (postA.voteScore > postB.voteScore) {
+        return -1
+      } else {
+        return 0
+      }
+    } else if (postA.timestamp < postB.timestamp) {
+      return 1
+    } else if (postA.timestamp > postB.timestamp) {
+      return -1
+    } else {
+      return 0
+    }
   }
 
   setSortToLikes = () => this.setState(() => ({sortFunction: 'likes'}))
@@ -29,19 +40,19 @@ class Posts extends React.Component  {
     return (
     <div className='container'>
       {this.props.match ? <h1>{this.props.match.params.category}</h1>: ''}
-      <span className='error'>Sort by (broken)</span> <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
+      Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
-        {/* removed .sort(this.sortFunction) from below */}
         { this.props.posts
           .filter(({deleted}) => (!deleted))
+          .sort(this.sortFunction)
           .map(({title, category, author, voteScore, timestamp, id, body, deleted}) => (
-          // remove title below once posts all have id field set
-            <li key={id || title}>
-              <Post
-                title={title}
-                author={author}
-                likes={voteScore}
-                category={this.props.match ? '' : category}
+            // remove title below once posts all have id field set
+              <li key={id || title}>
+                <Post
+                  title={title}
+                  author={author}
+                  likes={voteScore}
+                  category={this.props.match ? '' : category}
                 date={timestamp}
                 id={id}
                 body={body}

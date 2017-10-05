@@ -6,7 +6,8 @@ import {
   RECEIVE_CATEGORY_POSTS,
   RECEIVE_POST,
   CONFIRM_VOTE,
-  CONFIRM_EDIT_POST
+  CONFIRM_EDIT_POST,
+  CONFIRM_DELETE_POST,
 } from '../actions'
 
 function posts (state = [], action) {
@@ -37,6 +38,9 @@ function posts (state = [], action) {
           body
         }
       ))
+    case CONFIRM_DELETE_POST:
+    const { deleteID } = action
+    return state.map((post) => (post.id !== deleteID ? post : {...post, deleted: true}))
     default:
       return state
   }

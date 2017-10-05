@@ -9,7 +9,8 @@ import moment from 'moment'
 
 import {
   voteOnPost,
-  editPost
+  editPost,
+  deletePost,
 } from '../actions'
 
 class Post extends React.Component{
@@ -30,6 +31,7 @@ class Post extends React.Component{
   updateField = (event, key) => this.setState({[key]: event.target.value})
   submitEdit = (event) => (
     event.preventDefault(),
+    this.setModalEditClosed(),
     this.props.editPost({id: this.props.id, body: this.state.body, title: this.state.title})
   )
 
@@ -69,7 +71,7 @@ class Post extends React.Component{
             }
             <div>
               <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={20} /></button>
-              <FaTrashO size={20} />
+              <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={20} /></button>
             </div>
             { this.state.modalEditOpen ?
               <form className='edit-post-form' onSubmit={this.submitEdit}>
@@ -89,7 +91,8 @@ class Post extends React.Component{
 const mapDispatchToProps = (dispatch) => {
   return {
     voteOnPost: (postObj) => dispatch(voteOnPost(postObj)),
-    editPost: (editObj) => dispatch(editPost(editObj))
+    editPost: (editObj) => dispatch(editPost(editObj)),
+    deletePost: (id) => dispatch(deletePost(id)),
   }
 }
 export default connect(

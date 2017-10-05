@@ -7,6 +7,7 @@ export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const CONFIRM_VOTE = 'CONFIRM_VOTE'
 export const CONFIRM_EDIT_POST = 'CONFIRM_EDIT_POST'
+export const CONFIRM_DELETE_POST = 'CONFIRM_DELETE_POST'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -83,5 +84,17 @@ export const editPost = (editObj) => dispatch => (
 
 export const confirmEdit = (editObj) => ({
   type: CONFIRM_EDIT_POST,
-  ...editObj
+  ...editObj,
+  editID: editObj.id
+})
+
+export const deletePost = (id) => dispatch => (
+  API
+    .deletePost(id)
+    .then(data => dispatch(confirmDeletePost(id)))
+)
+
+export const confirmDeletePost = (id) => ({
+  type: CONFIRM_DELETE_POST,
+  deleteID: id
 })

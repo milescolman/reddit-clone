@@ -74,4 +74,19 @@ export const editPost = ({id, title, body}) => (
     method: 'PUT',
     body: JSON.stringify({title, body})
   })
+    .then(
+      res =>  res.json(),
+      error => alert(`Error in editing post id ${id}: ${error}`)
+    )
+)
+
+export const deletePost = (id) => (
+  fetch(`${api}/posts/${id}`,{
+    headers,
+    method: 'DELETE',
+  })
+    .then(
+      res => res,
+      error => alert(`Error in deleting post id ${id}: ${error}`)
+    )
 )

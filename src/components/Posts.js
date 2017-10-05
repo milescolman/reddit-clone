@@ -32,7 +32,9 @@ class Posts extends React.Component  {
       <span className='error'>Sort by (broken)</span> <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       <ul className='post-list'>
         {/* removed .sort(this.sortFunction) from below */}
-        { this.props.posts.map(({title, category, author, voteScore, timestamp, id, body}) => (
+        { this.props.posts
+          .filter(({deleted}) => (!deleted))
+          .map(({title, category, author, voteScore, timestamp, id, body, deleted}) => (
           // remove title below once posts all have id field set
             <li key={id || title}>
               <Post
@@ -43,8 +45,10 @@ class Posts extends React.Component  {
                 date={timestamp}
                 id={id}
                 body={body}
+                deleted={deleted}
               />
-          </li>
+            </li>
+
         )
         )}
       </ul>

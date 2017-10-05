@@ -14,51 +14,44 @@ class NewPost extends React.Component {
       author: '',
       category: '',
       body: '',
+      error: '',
     }
 
-    this.handleTitle = this.handleTitle.bind(this)
-    this.handleAuthor = this.handleAuthor.bind(this)
-    this.handleBody = this.handleBody.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleTitle(event) {
-    this.setState({title: event.target.value})
-  }
-  handleAuthor(event) {
-    this.setState({author: event.target.value})
-  }
-  handleBody(event) {
-    this.setState({body: event.target.value})
-  }
-  handleSelect(event) {
-    this.setState({category: event.target.value})
-  }
-  handleSubmit(event) {
-    /* input validation */
+  handleField = (event, field) =>
+    this.setState({error: '', [field]: event.target.value})
+
+  handleSubmit = (event) => {
     event.preventDefault()
+    /* input validation */
+    if (!this.state.title || !this.state.author || !this.state.category || !this.state.body) {
+      this.setState({error: 'All fields are required.'})
+      return
+    }
     this.props.submitPost(this.state)
     this.setState({
       title: '',
       author: '',
       category: '',
       body: '',
+      error: '',
     })
   }
 
   render = () => (
     <div className='new-post'>
-      <h3>New Post <span className='error'>fix overlap of posts </span></h3>
+      <h3>New Post</h3>
+      {this.state.error ? <div className='error'>{this.state.error}</div> : ''}
       <form onSubmit={this.handleSubmit}>
-        <label>Title: <input name="title" placeholder="post title" value={this.state.title} onChange={this.handleTitle}/></label>
-        <label>Author: <input name="author" placeholder="your username" value={this.state.author} onChange={this.handleAuthor}/></label>
+        <label>Title: <input name="title" placeholder="post title" value={this.state.title} onChange={(event) => this.handleField(event, 'title')}/></label>
+        <label>Author: <input name="author" placeholder="your username" value={this.state.author} onChange={(event) => this.handleField(event, 'author')}/></label>
         {/* Replace category select with autocomplete search later */}
-        <label>Category: <select defaultValue='Select a Category' value={this.state.select} onChange={this.handleSelect}>
+        <label>Category: <select defaultValue='Select a Category' value={this.state.category} onChange={(event) => this.handleField(event, 'category')}>
           <option disabled>Select a Category</option>
           {this.props.categories.map((cat, idx) => <option key={idx} value={cat}>{cat}</option>)}
         </select>
         </label>
-        <label>Body: <textarea name="body" placeholder="post body" value={this.state.body} onChange={this.handleBody}/></label>
+        <label>Body: <textarea name="body" placeholder="post body" value={this.state.body} onChange={(event) => this.handleField(event, 'body')}/></label>
         <input type="submit" value="Submit" />
       </form>
     </div>

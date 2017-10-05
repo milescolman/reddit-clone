@@ -25,6 +25,11 @@ body, .app {
   list-style: none;
 }
 
+.post-list {
+  height: calc(100vh - 200px);
+  overflow: scroll;
+}
+
 .category-list{
   display: inline-block;
 }

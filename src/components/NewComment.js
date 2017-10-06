@@ -23,7 +23,8 @@ class NewComment extends React.Component {
         timestamp: Date.now(),
         body: this.state.comment,
         author: this.state.author,
-        parentID: this.props.match.params.id,
+        parentId: this.props.match.params.id,
+        voteScore: 1
       })
       this.setState({comment: '', author: ''})
     } else {

@@ -12,6 +12,7 @@ export const CONFIRM_DELETE_POST = 'CONFIRM_DELETE_POST'
 
 export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS'
 export const CONFIRM_NEW_COMMENT = 'CONFIRM_NEW_COMMENT'
+export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -123,4 +124,15 @@ export const sendNewComment = (commentObj) => dispatch => (
 export const confirmNewComment = (commentObj) => ({
   type: CONFIRM_NEW_COMMENT,
   commentObj
+})
+
+export const fetchComment = (commentID) => dispatch => (
+  API
+    .fetchComment(commentID)
+    .then(data => dispatch(receiveComment(data)))
+)
+
+export const receiveComment = (comment) => ({
+  type: RECEIVE_COMMENT,
+  comment
 })

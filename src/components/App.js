@@ -15,6 +15,7 @@ import SinglePostWrapper from './SinglePostWrapper'
 import NewPost from './NewPost'
 import NewComment from './NewComment'
 import Comments from './Comments'
+import Comment from './Comment'
 
 class RedditApp extends React.Component {
 
@@ -65,6 +66,16 @@ class RedditApp extends React.Component {
                   <SinglePostWrapper {...props}/>
                   <Comments {...props}/>
                   <NewComment {...props}/>
+                </div>
+              )}
+            />
+            <Route
+              path="/comments/:id"
+              render={props => (
+                <div className='container'>
+                  <Categories />
+                  
+                  <Comment {...props}/>
                 </div>
               )}
             />

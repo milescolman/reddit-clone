@@ -13,6 +13,7 @@ import {
 import {
   RECEIVE_POST_COMMENTS,
   CONFIRM_NEW_COMMENT,
+  RECEIVE_COMMENT,
 } from '../actions'
 
 function posts (state = [], action) {
@@ -60,6 +61,9 @@ function comments (state = [], action) {
       const { commentObj } = action
       console.log(action)
       return [...state, commentObj]
+    case RECEIVE_COMMENT:
+      const { comment } = action
+      return [comment]
     default:
       return state
   }

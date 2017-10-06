@@ -108,3 +108,12 @@ export const newComment = (commentObj) => (
     body: JSON.stringify(commentObj)
   })
 )
+
+export const fetchComment = (commentID) =>
+  fetch(`${api}/comments/${commentID}`, {
+    headers,
+  })
+  .then(
+    res => res.json(),
+    error => alert(`Error in fetching comment id ${commentID}: ${error}`)
+  )

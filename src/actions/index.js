@@ -1,6 +1,7 @@
 import * as API from '../utils/api'
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
+
 export const RECEIVE_ALL_POSTS = 'GET_ALL_POSTS'
 export const RECEIVE_CATEGORY_POSTS = 'RECEIVE_CATEGORY_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
@@ -8,6 +9,9 @@ export const RECEIVE_POST = 'RECEIVE_POST'
 export const CONFIRM_VOTE = 'CONFIRM_VOTE'
 export const CONFIRM_EDIT_POST = 'CONFIRM_EDIT_POST'
 export const CONFIRM_DELETE_POST = 'CONFIRM_DELETE_POST'
+
+export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS'
+export const CONFIRM_NEW_COMMENT = 'CONFIRM_NEW_COMMENT'
 
 export const fetchCategories = () => dispatch => (
   API
@@ -97,4 +101,26 @@ export const deletePost = (id) => dispatch => (
 export const confirmDeletePost = (id) => ({
   type: CONFIRM_DELETE_POST,
   deleteID: id
+})
+
+export const requestPostComments = (id) => dispatch => (
+  API
+    .receivePostComments(id)
+    .then(data => dispatch(receivePostComments(data)))
+)
+
+export const receivePostComments = (comments) => ({
+  type: RECEIVE_POST_COMMENTS,
+  comments
+})
+
+export const sendNewComment = (commentObj) => dispatch => (
+  API
+    .newComment(commentObj)
+    .then(data => dispatch(confirmNewComment(commentObj)))
+)
+
+export const confirmNewComment = (commentObj) => ({
+  type: CONFIRM_NEW_COMMENT,
+  commentObj
 })

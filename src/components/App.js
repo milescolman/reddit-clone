@@ -13,6 +13,8 @@ import NotFound from './NotFound'
 import Posts from './Posts'
 import SinglePostWrapper from './SinglePostWrapper'
 import NewPost from './NewPost'
+import NewComment from './NewComment'
+import Comments from './Comments'
 
 class RedditApp extends React.Component {
 
@@ -61,6 +63,8 @@ class RedditApp extends React.Component {
                 <div className='container'>
                   <Categories />
                   <SinglePostWrapper {...props}/>
+                  <Comments {...props}/>
+                  <NewComment {...props}/>
                 </div>
               )}
             />

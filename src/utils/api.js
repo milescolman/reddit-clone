@@ -1,5 +1,5 @@
-const uuidv1 = require('uuid/v1');
-
+//const uuidv1 = require('uuid/v1');
+import uuidv1 from 'uuid/v1'
 const api = "http://localhost:3001"
 
 // Generate a unique token
@@ -89,4 +89,22 @@ export const deletePost = (id) => (
       res => res,
       error => alert(`Error in deleting post id ${id}: ${error}`)
     )
+)
+
+export const receivePostComments = (id) => (
+  fetch(`${api}/posts/${id}/comments`, {
+    headers
+  })
+    .then(
+      res => res.json(),
+      error => alert(`Error in fetching comments for post id ${id}: ${error}`)
+    )
+)
+
+export const newComment = (commentObj) => (
+  fetch(`${api}/comments`, {
+    headers,
+    method: 'POST',
+    body: JSON.stringify(commentObj)
+  })
 )

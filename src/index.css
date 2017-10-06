@@ -20,6 +20,7 @@ body, .app {
   background: #f5f5f5;
 }
 
+.comment-list,
 .category-list,
 .post-list {
   list-style: none;

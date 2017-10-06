@@ -10,6 +10,11 @@ import {
   CONFIRM_DELETE_POST,
 } from '../actions'
 
+import {
+  RECEIVE_POST_COMMENTS,
+  CONFIRM_NEW_COMMENT,
+} from '../actions'
+
 function posts (state = [], action) {
   switch (action.type) {
     case RECEIVE_CATEGORY_POSTS:
@@ -45,7 +50,20 @@ function posts (state = [], action) {
       return state
   }
 }
-
+function comments (state = [], action) {
+  switch (action.type) {
+    // need some comments to see how server-returned comments will be formatted
+    case RECEIVE_POST_COMMENTS:
+      const { comments } = action
+      return [ ...comments ]
+    case CONFIRM_NEW_COMMENT:
+      const { commentObj } = action
+      console.log(action)
+      return [...state, commentObj]
+    default:
+      return state
+  }
+}
 function categories (state = [], action) {
   switch (action.type) {
     case RECEIVE_CATEGORIES:
@@ -60,5 +78,6 @@ function categories (state = [], action) {
 
 export default combineReducers({
   categories,
+  comments,
   posts,
 })

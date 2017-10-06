@@ -66,7 +66,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => (
       dispatch(sendNewPost(post)),
-      dispatch(fetchAllPosts()) //could update redux state of posts directly here to reduce api calls
+      dispatch(fetchAllPosts())
+      //can't update redux state of posts in reducere to reduce api calls
+      // because server doesn't return anything on a new post creation
+      // If we had the post id, we could request just that post...
   ),
   }
 }

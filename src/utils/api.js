@@ -47,7 +47,10 @@ export const addNewPost = (postBody) =>
       timestamp: Date.now(),
       ...postBody,
     }),
-}))
+}).then(
+  res => res.json(),
+  error => `Error in creating new post: ${error}`
+))
 
 export const fetchPost = (id) =>
   fetch(`${api}/posts/${id}`, { headers})
@@ -106,7 +109,10 @@ export const newComment = (commentObj) => (
     headers,
     method: 'POST',
     body: JSON.stringify(commentObj)
-  })
+  }).then(
+    res => res.json(),
+    error => alert(`Error in creating new comment: ${error}`)
+  )
 )
 
 export const fetchComment = (commentID) =>
@@ -123,11 +129,26 @@ export const voteOnComment = ({id, option}) =>
     headers,
     method: 'POST',
     body: JSON.stringify({option})
-  })
+  }).then(
+    res => res.json(),
+    error => alert(`Error in voting on comment id ${id}: ${error}`)
+  )
 
 export const editComment = ({id, timestamp, body}) =>
   fetch(`${api}/comments/${id}`, {
     headers,
     method: 'PUT',
     body: JSON.stringify({timestamp, body})
-  })
+  }).then(
+    res => res.json(),
+    error => alert(`Error in editing comment ${id}: ${error}`)
+  )
+
+export const deleteCommment = (id) =>
+  fetch(`${api}/comment/${id}`, {
+    headers,
+    method: 'DELETE'
+  }).then(
+    res => res.json(),
+    error => alert(`Error in deleting comment ${id}: ${error}`)
+  )

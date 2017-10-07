@@ -124,3 +124,10 @@ export const voteOnComment = ({id, option}) =>
     method: 'POST',
     body: JSON.stringify({option})
   })
+
+export const editComment = ({id, timestamp, body}) =>
+  fetch(`${api}/comments/${id}`, {
+    headers,
+    method: 'PUT',
+    body: JSON.stringify({timestamp, body})
+  })

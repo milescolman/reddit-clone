@@ -15,6 +15,7 @@ import {
   CONFIRM_NEW_COMMENT,
   RECEIVE_COMMENT,
   VOTE_ON_COMMENT,
+  EDIT_COMMENT,
 } from '../actions'
 
 function posts (state = [], action) {
@@ -70,6 +71,12 @@ function comments (state = [], action) {
       return state.map(comment => ((comment.id !== voteObj.id) ?
         comment :
         {...comment, voteScore: comment.voteScore += (voteObj.option === 'upVote') ? 1 : -1 }
+      ))
+    case EDIT_COMMENT:
+      const {id, timestamp, body} = action.commentObj
+      return state.map(comment => ((comment.id !== id) ?
+        comment :
+        {...comment, body, timestamp}
       ))
     default:
       return state

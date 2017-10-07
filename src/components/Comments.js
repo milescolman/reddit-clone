@@ -12,8 +12,6 @@ class Comments extends React.Component {
       {this.props.comments.filter(({deleted, parentDeleted}) => (!(deleted || parentDeleted)))
         .map(({body, author, timestamp, id, parentID, voteScore}) => (
           <li key={id} className='comment'>
-            {/* {voteScore} <a href={`/comments/${id}`}>{body}</a>
-            by {author} {moment(timestamp).fromNow()} */}
             <Comment
               body={body}
               author={author}

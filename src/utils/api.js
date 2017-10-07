@@ -144,8 +144,8 @@ export const editComment = ({id, timestamp, body}) =>
     error => alert(`Error in editing comment ${id}: ${error}`)
   )
 
-export const deleteCommment = (id) =>
-  fetch(`${api}/comment/${id}`, {
+export const deleteComment = (id) =>
+  fetch(`${api}/comments/${id}`, {
     headers,
     method: 'DELETE'
   }).then(

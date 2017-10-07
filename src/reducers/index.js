@@ -16,6 +16,7 @@ import {
   RECEIVE_COMMENT,
   VOTE_ON_COMMENT,
   EDIT_COMMENT,
+  DELETE_COMMENT,
 } from '../actions'
 
 function posts (state = [], action) {
@@ -49,6 +50,7 @@ function posts (state = [], action) {
     case CONFIRM_DELETE_POST:
     const { deleteID } = action
     return state.map((post) => (post.id !== deleteID ? post : {...post, deleted: true}))
+    // delete all comments associated with post ?
     default:
       return state
   }
@@ -78,6 +80,11 @@ function comments (state = [], action) {
         comment :
         {...comment, body, timestamp}
       ))
+    case DELETE_COMMENT:
+      return state.map( comment  => ((comment.id !== action.id) ?
+      comment :
+       {...comment, deleted: true}
+    ))
     default:
       return state
   }

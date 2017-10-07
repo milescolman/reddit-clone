@@ -3,7 +3,9 @@ import moment from 'moment'
 import {connect} from 'react-redux'
 import {
   voteOnComment,
-  editComment} from '../actions'
+  editComment,
+  deleteComment
+} from '../actions'
 import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import FaTrashO from 'react-icons/lib/fa/trash-o'
@@ -42,7 +44,7 @@ class Comment extends React.Component {
           />
           {this.props.body} by {this.props.author} {moment(this.props.timestamp).fromNow()}
           <FaEdit onClick={this.toggleCommentEditor} size={14}/>
-          <FaTrashO size={14}/>
+          <FaTrashO onClick={() => this.props.delete(this.props.id)} size={14}/>
           {(this.state.showCommentEditor) ?
             <form onSubmit={this.submitForm}>
               <label>Body: <input value={this.state.body} onChange={this.handleBody}/></label>
@@ -55,6 +57,7 @@ class Comment extends React.Component {
 }
 const mapDispatchToProps = (dispatch) => ({
   vote: (voteObj) => dispatch(voteOnComment(voteObj)),
-  submitEdit: (commentObj) => dispatch(editComment(commentObj))
+  submitEdit: (commentObj) => dispatch(editComment(commentObj)),
+  delete: (id) => dispatch(deleteComment(id))
 })
 export default connect(null, mapDispatchToProps)(Comment)

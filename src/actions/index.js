@@ -13,6 +13,8 @@ export const CONFIRM_DELETE_POST = 'CONFIRM_DELETE_POST'
 export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS'
 export const CONFIRM_NEW_COMMENT = 'CONFIRM_NEW_COMMENT'
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
+export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT'
+
 
 export const fetchCategories = () => dispatch => (
   API
@@ -135,4 +137,15 @@ export const fetchComment = (commentID) => dispatch => (
 export const receiveComment = (comment) => ({
   type: RECEIVE_COMMENT,
   comment
+})
+
+export const voteOnComment = (voteObj) => dispatch => (
+  API
+    .voteOnComment(voteObj)
+    .then(data => dispatch(confirmVoteOnComment(voteObj)))
+)
+
+export const confirmVoteOnComment = (voteObj) => ({
+  type: VOTE_ON_COMMENT,
+  voteObj
 })

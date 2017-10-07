@@ -117,3 +117,10 @@ export const fetchComment = (commentID) =>
     res => res.json(),
     error => alert(`Error in fetching comment id ${commentID}: ${error}`)
   )
+
+export const voteOnComment = ({id, option}) =>
+  fetch(`${api}/comments/${id}`, {
+    headers,
+    method: 'POST',
+    body: JSON.stringify({option})
+  })

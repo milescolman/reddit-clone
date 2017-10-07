@@ -2,7 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { requestPostComments } from '../actions'
+import Comment from './Comment'
 class Comments extends React.Component {
+
   componentDidMount = () => this.props.fetchComments(this.props.match.params.id)
 
   render = () => (
@@ -10,8 +12,16 @@ class Comments extends React.Component {
       {this.props.comments.filter(({deleted, parentDeleted}) => (!(deleted || parentDeleted)))
         .map(({body, author, timestamp, id, parentID, voteScore}) => (
           <li key={id} className='comment'>
-            {voteScore} <a href={`/comments/${id}`}>{body}</a>
-            by {author} {moment(timestamp).fromNow()}
+            {/* {voteScore} <a href={`/comments/${id}`}>{body}</a>
+            by {author} {moment(timestamp).fromNow()} */}
+            <Comment
+              body={body}
+              author={author}
+              timestamp={timestamp}
+              id={id}
+              parentId={parentID}
+              voteScore={voteScore}
+            />
           </li>
 
         ))

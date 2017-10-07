@@ -59,7 +59,7 @@ class RedditApp extends React.Component {
               )}
             />
             <Route
-              path="/posts/:id"
+              path="/:category/:id"
               render={props => (
                 <div className='container'>
                   <Categories />
@@ -74,7 +74,7 @@ class RedditApp extends React.Component {
               render={props => (
                 <div className='container'>
                   <Categories />
-                  
+
                   <Comment {...props}/>
                 </div>
               )}

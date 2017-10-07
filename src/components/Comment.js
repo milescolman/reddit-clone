@@ -1,34 +1,29 @@
 import React from 'react'
+import moment from 'moment'
 import {connect} from 'react-redux'
-import {fetchComment} from '../actions'
+import {voteOnComment} from '../actions'
+import FaAngleUp from 'react-icons/lib/fa/angle-up'
+import FaAngleDown from 'react-icons/lib/fa/angle-down'
 
 class Comment extends React.Component {
-    componentDidMount () {
-      this.props.fetchComment(this.props.match.params.id)
-    }
-
     render = () => {
       return (
         <div className='container'>
-          {this.props.comment[0] &&
-            `${this.props.comment[0].body} by ${this.props.comment[0].author}`
-          }
+
+          <FaAngleUp size={14}
+            onClick={() => this.props.vote({id: this.props.id, option: 'upVote'})}
+          />
+          {this.props.voteScore}
+          <FaAngleDown size={14}
+            onClick={() => this.props.vote({id: this.props.id, option: 'downVote'})}
+          />
+          {this.props.body} by {this.props.author} {moment(this.props.timestamp).fromNow()}
+
         </div>
       )
     }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchComment: (id) => dispatch(fetchComment(id)),
-  }
-}
-
-const mapStateToProps = (state) => (
-  {comment: state.comments}
-)
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Comment)
+const mapDispatchToProps = (dispatch) => ({
+  vote: (voteObj) => dispatch(voteOnComment(voteObj))
+})
+export default connect(null, mapDispatchToProps)(Comment)

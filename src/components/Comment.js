@@ -29,6 +29,7 @@ class Comment extends React.Component {
     submitForm = (event) => {
       event.preventDefault()
       this.props.submitEdit({id: this.props.id, body: this.state.body, timestamp: Date.now()})
+      this.setState({showCommentEditor: false})
     }
 
     render = () => {

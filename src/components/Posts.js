@@ -53,15 +53,15 @@ class Posts extends React.Component  {
                   author={author}
                   likes={voteScore}
                   category={this.props.match ? '' : category}
-                date={timestamp}
-                id={id}
-                body={body}
-                deleted={deleted}
-              />
-            </li>
+                  date={timestamp}
+                  id={id}
+                  body={body}
+                  deleted={deleted}
+                />
+              </li>
 
-        )
-        )}
+          )
+          )}
       </ul>
     </div>
   )}

@@ -5,12 +5,14 @@ import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
+import FaCommentsO from 'react-icons/lib/fa/comments-o'
 import moment from 'moment'
 
 import {
   voteOnPost,
   editPost,
   deletePost,
+  requestPostComments,
 } from '../actions'
 
 class Post extends React.Component{
@@ -24,6 +26,10 @@ class Post extends React.Component{
     }
 
   }
+
+  componentDidMount = () => ( // fetch number of comments
+    this.props.getCommentTotal(this.props.id)
+  )
   //arrow functions so don't need this bound in constructor. yay!
   setModalEditOpen = () => this.setState({modalEditOpen: true})
   setModalEditClosed = () => this.setState({modalEditOpen: false})
@@ -70,6 +76,7 @@ class Post extends React.Component{
               </div>
             }
             <div>
+              <FaCommentsO size={30}/> {this.props.commentTotal}
               <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={20} /></button>
               <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={20} /></button>
             </div>
@@ -88,14 +95,18 @@ class Post extends React.Component{
     }
 
 }
+const mapStateToProps = (state, ownProps) => ({
+  commentTotal: state.comments.reduce((sum, comment) => ((comment.parentId === ownProps.id) ? ++sum : sum), 0)
+})
 const mapDispatchToProps = (dispatch) => {
   return {
     voteOnPost: (postObj) => dispatch(voteOnPost(postObj)),
     editPost: (editObj) => dispatch(editPost(editObj)),
     deletePost: (id) => dispatch(deletePost(id)),
+    getCommentTotal: (id) => dispatch(requestPostComments(id))
   }
 }
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Post)

@@ -6,12 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import { compose, createStore,
   applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import reducer from './reducers'
+import rootReducer from './reducers'
 import { Provider } from 'react-redux'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer,
+const store = createStore(rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 )
 export default store

@@ -1,8 +1,9 @@
+import { normalize, schema } from 'normalizr'
 import { combineReducers } from 'redux'
+import categoriesReducer from './categories_reducer'
 
 import {
   RECEIVE_ALL_POSTS,
-  RECEIVE_CATEGORIES,
   RECEIVE_CATEGORY_POSTS,
   RECEIVE_POST,
   CONFIRM_VOTE,
@@ -18,6 +19,13 @@ import {
   EDIT_COMMENT,
   DELETE_COMMENT,
 } from '../actions'
+
+const author = new schema.Entity('authors')
+const comment = new schema.Entity('comments', { author })
+const post = new schema.Entity('posts', {
+  author,
+  comments: [comment]
+ })
 
 function posts (state = [], action) {
   switch (action.type) {
@@ -55,12 +63,20 @@ function posts (state = [], action) {
       return state
   }
 }
-function comments (state = [], action) {
+function comments (state = {}, action) {
   switch (action.type) {
     // need some comments to see how server-returned comments will be formatted
     case RECEIVE_POST_COMMENTS:
-      const { comments } = action
-      return [ ...comments ]
+      const { comments } =  action
+      if (comments.length > 0) {
+      const commentAr = []
+      comments.forEach(comment => {
+        commentAr.push(comment)
+      })
+      return (commentAr.length > 0) ? {...state,  [commentAr[0].parentId]: commentAr} : state
+    } else {
+      return state
+    }
     case CONFIRM_NEW_COMMENT:
       const { commentObj } = action
       console.log(action)
@@ -89,20 +105,10 @@ function comments (state = [], action) {
       return state
   }
 }
-function categories (state = [], action) {
-  switch (action.type) {
-    case RECEIVE_CATEGORIES:
-      const { categories } = action
-      return [
-        ...categories
-      ]
-    default:
-      return state
-  }
-}
 
-export default combineReducers({
-  categories,
+const rootReducer = combineReducers({
+  categories: categoriesReducer,
   comments,
   posts,
 })
+export default rootReducer

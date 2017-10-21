@@ -162,13 +162,14 @@ export const confirmEditComment = (commentObj) => ({
   commentObj
 })
 
-export const deleteComment = (id) => dispatch => (
+export const deleteComment = ({id, parentId}) => dispatch => (
   API.
     deleteComment(id)
-    .then(data => dispatch(confirmDeleteComment(id)))
+    .then(data => dispatch(confirmDeleteComment({id, parentId})))
 )
 
-export const confirmDeleteComment = (id) => ({
+export const confirmDeleteComment = ({id, parentId}) => ({
   type: DELETE_COMMENT,
-  id
+  id,
+  parentId
 })

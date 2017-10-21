@@ -9,15 +9,15 @@ class Comments extends React.Component {
 
   render = () => (
     <ul className='comment-list'>
-      {this.props.comments.filter(({deleted, parentDeleted}) => (!(deleted || parentDeleted)))
-        .map(({body, author, timestamp, id, parentID, voteScore}) => (
+      {this.props.comments && this.props.comments.filter(({deleted, parentDeleted}) => (!(deleted || parentDeleted)))
+        .map(({body, author, timestamp, id, parentId, voteScore}) => (
           <li key={id} className='comment'>
             <Comment
               body={body}
               author={author}
               timestamp={timestamp}
               id={id}
-              parentId={parentID}
+              parentId={parentId}
               voteScore={voteScore}
             />
           </li>
@@ -27,7 +27,7 @@ class Comments extends React.Component {
     </ul>
     )
 }
-const mapStateToProps = (state) => ({comments: state.comments})
+const mapStateToProps = (state, ownProps) => ({comments: state.comments[ownProps.match.params.id]})
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComments: (id) => dispatch(requestPostComments(id))

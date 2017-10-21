@@ -28,7 +28,7 @@ class Comment extends React.Component {
     }
     submitForm = (event) => {
       event.preventDefault()
-      this.props.submitEdit({id: this.props.id, body: this.state.body, timestamp: Date.now()})
+      this.props.submitEdit({id: this.props.id, parentId: this.props.parentId, body: this.state.body, timestamp: Date.now()})
       this.setState({showCommentEditor: false})
     }
 
@@ -37,11 +37,11 @@ class Comment extends React.Component {
         <div className='comment'>
 
           <FaAngleUp size={14}
-            onClick={() => this.props.vote({id: this.props.id, option: 'upVote'})}
+            onClick={() => this.props.vote({id: this.props.id, parentId: this.props.parentId, option: 'upVote'})}
           />
           {this.props.voteScore}
           <FaAngleDown size={14}
-            onClick={() => this.props.vote({id: this.props.id, option: 'downVote'})}
+            onClick={() => this.props.vote({id: this.props.id, parentId: this.props.parentId, option: 'downVote'})}
           />
           {this.props.body} by {this.props.author} {moment(this.props.timestamp).fromNow()}
           <FaEdit onClick={this.toggleCommentEditor} size={14}/>
@@ -56,9 +56,9 @@ class Comment extends React.Component {
       )
     }
 }
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   vote: (voteObj) => dispatch(voteOnComment(voteObj)),
   submitEdit: (commentObj) => dispatch(editComment(commentObj)),
-  delete: (id) => dispatch(deleteComment(id))
+  delete: (id) => dispatch(deleteComment({id, parentId: ownProps.parentId}))
 })
 export default connect(null, mapDispatchToProps)(Comment)

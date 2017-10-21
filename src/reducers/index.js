@@ -1,4 +1,4 @@
-import { normalize, schema } from 'normalizr'
+// import { normalize, schema } from 'normalizr'
 import { combineReducers } from 'redux'
 import categoriesReducer from './categories_reducer'
 
@@ -20,12 +20,12 @@ import {
   DELETE_COMMENT,
 } from '../actions'
 
-const author = new schema.Entity('authors')
-const comment = new schema.Entity('comments', { author })
-const post = new schema.Entity('posts', {
-  author,
-  comments: [comment]
- })
+// if I maintain object for comments separately, don't need normalizr
+//const author = new schema.Entity('authors')
+// const comment = new schema.Entity('comments')
+// const post = new schema.Entity('posts', {
+//   comments: [comment]
+//  })
 
 function posts (state = [], action) {
   switch (action.type) {
@@ -68,39 +68,34 @@ function comments (state = {}, action) {
     // need some comments to see how server-returned comments will be formatted
     case RECEIVE_POST_COMMENTS:
       const { comments } =  action
-      if (comments.length > 0) {
-      const commentAr = []
-      comments.forEach(comment => {
-        commentAr.push(comment)
-      })
-      return (commentAr.length > 0) ? {...state,  [commentAr[0].parentId]: commentAr} : state
-    } else {
-      return state
-    }
+      return (comments.length > 0) ? {...state,  [comments[0].parentId]: comments} : state
+
     case CONFIRM_NEW_COMMENT:
       const { commentObj } = action
-      console.log(action)
-      return [...state, commentObj]
-    case RECEIVE_COMMENT:
+      return (state[commentObj.parentId]) ? { ...state,
+        [commentObj.parentId]: [...state[commentObj.parentId], commentObj]} :
+        {[commentObj.parentId]: [commentObj]}
+    case RECEIVE_COMMENT: //need to test
       const { comment } = action
-      return [comment]
+      return {[comment.parentId]: [comment]}
     case VOTE_ON_COMMENT:
       const {voteObj} = action
-      return state.map(comment => ((comment.id !== voteObj.id) ?
+      return {...state, [voteObj.parentId]: state[voteObj.parentId].map(comment => ((comment.id !== voteObj.id) ?
         comment :
         {...comment, voteScore: comment.voteScore += (voteObj.option === 'upVote') ? 1 : -1 }
-      ))
+      ))}
     case EDIT_COMMENT:
-      const {id, timestamp, body} = action.commentObj
-      return state.map(comment => ((comment.id !== id) ?
+      const {id, parentId, timestamp, body} = action.commentObj
+      return {...state, [parentId]: state[parentId].map(comment => ((comment.id !== id) ?
         comment :
         {...comment, body, timestamp}
-      ))
+      ))}
     case DELETE_COMMENT:
-      return state.map( comment  => ((comment.id !== action.id) ?
+      console.log(action)
+      return {...state, [action.parentId]: state[action.parentId].map( comment  => ((comment.id !== action.id) ?
       comment :
        {...comment, deleted: true}
-    ))
+    ))}
     default:
       return state
   }

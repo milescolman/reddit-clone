@@ -11,7 +11,7 @@ from 'react-router-dom'
 import Categories from './Categories'
 import NotFound from './NotFound'
 import Posts from './Posts'
-import SinglePostWrapper from './SinglePostWrapper'
+import SinglePostWrapperWrapper from './SinglePostWrapperWrapper'
 import NewPost from './NewPost'
 import NewComment from './NewComment'
 import Comments from './Comments'
@@ -49,6 +49,14 @@ class RedditApp extends React.Component {
               }
             />
             <Route
+              exact
+              path="/:category"
+              render={() => (
+                <Redirect to={{
+                  pathname: '/:category/posts'
+                }}/>
+              )} />
+            <Route
               path="/:category/posts"
               render={props => (
                 <div className='container'>
@@ -60,24 +68,10 @@ class RedditApp extends React.Component {
             />
             <Route
               path="/:category/:id"
-              render={props => (
-                <div className='container'>
-                  <Categories />
-                  <SinglePostWrapper {...props}/>
-                  <Comments {...props}/>
-                  <NewComment {...props}/>
-                </div>
-              )}
-            />
-            <Route
-              path="/comments/:id"
-              render={props => (
-                <div className='container'>
-                  <Categories />
-
-                  <Comment {...props}/>
-                </div>
-              )}
+              render={
+                (props) => (
+                  <SinglePostWrapperWrapper {...props}/>
+                )}
             />
             <Route component={NotFound}/>
           </Switch>
@@ -87,7 +81,10 @@ class RedditApp extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  posts: state.posts
+})
 export default connect(
-  null,
+  mapStateToProps,
   null
 )(RedditApp)

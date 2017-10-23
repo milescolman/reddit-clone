@@ -26,9 +26,9 @@ class RedditApp extends React.Component {
           <Switch>
             <Route exact
               path='/posts'
-              render={() => (
+              render={(props) => (
                 <div className='container'>
-                  <Categories />
+                  <Categories {...props}/>
                   <Posts />
                   <NewPost />
                 </div>
@@ -36,8 +36,8 @@ class RedditApp extends React.Component {
             />
             <Route exact
               path='/categories'
-              render={() => (
-                <Categories />
+              render={(props) => (
+                <Categories {...props}/>
               )}
             />
             <Route exact
@@ -60,7 +60,7 @@ class RedditApp extends React.Component {
               path="/:category/posts"
               render={props => (
                 <div className='container'>
-                  <Categories />
+                  <Categories {...props}/>
                   <Posts {...props}/>
                   <NewPost />
                 </div>

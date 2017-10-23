@@ -23,7 +23,7 @@ class SinglePostWrapperWrapper extends React.Component {
     } else {
       return (
         <div className='container'>
-          <Categories />
+          <Categories category={matchingPost[0].category}/>
           <SinglePostWrapper {...this.props}/>
           <Comments {...this.props}/>
           <NewComment {...this.props}/>

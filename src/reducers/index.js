@@ -1,10 +1,11 @@
-// import { normalize, schema } from 'normalizr'
+
 import { combineReducers } from 'redux'
 import categoriesReducer from './categories_reducer'
 
 import {
   RECEIVE_ALL_POSTS,
   RECEIVE_CATEGORY_POSTS,
+  ADD_NEW_POST,
   RECEIVE_POST,
   CONFIRM_VOTE,
   CONFIRM_EDIT_POST,
@@ -20,12 +21,7 @@ import {
   DELETE_COMMENT,
 } from '../actions'
 
-// if I maintain object for comments separately, don't need normalizr
-//const author = new schema.Entity('authors')
-// const comment = new schema.Entity('comments')
-// const post = new schema.Entity('posts', {
-//   comments: [comment]
-//  })
+// data from API is  already normalized, don't need normalizr
 
 function posts (state = [], action) {
   switch (action.type) {
@@ -36,6 +32,9 @@ function posts (state = [], action) {
       return [
         ...posts
       ]
+    case ADD_NEW_POST:
+        const {post} = action
+        return [...state, post]
     case CONFIRM_VOTE:
       const {id, option} = action
       return state.map((post) => (
@@ -91,7 +90,6 @@ function comments (state = {}, action) {
         {...comment, body, timestamp}
       ))}
     case DELETE_COMMENT:
-      console.log(action)
       return {...state, [action.parentId]: state[action.parentId].map( comment  => ((comment.id !== action.id) ?
       comment :
        {...comment, deleted: true}

@@ -53,11 +53,12 @@ export const receiveCategoryPosts = (posts) => ({
 export const sendNewPost = (post) => dispatch => (
   API
     .addNewPost(post)
-    .then(data => dispatch(confirmNewPost(data)))
+    .then(data => dispatch(confirmNewPost(post)))
 )
 
-// nothing return from server, so this function should have argument prefilled above
-export const confirmNewPost = (post) => ({
+export const confirmNewPost = (post) => (
+  console.log(post),
+  {
   type: ADD_NEW_POST,
   post
 })

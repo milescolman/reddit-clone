@@ -97,7 +97,8 @@ class Post extends React.Component{
 }
 const mapStateToProps = (state, ownProps) => ({
   commentTotal: (state.comments[ownProps.id]) ?
-    state.comments[ownProps.id].reduce((sum, comment) => ((comment.parentId === ownProps.id && !comment.deleted) ? ++sum : sum), 0) :
+    state.comments[ownProps.id].reduce((sum, comment) =>
+    ((comment.parentId === ownProps.id && !comment.deleted) ? ++sum : sum), 0) :
     0
 })
 const mapDispatchToProps = (dispatch) => {

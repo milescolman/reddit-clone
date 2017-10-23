@@ -1,9 +1,9 @@
+import uuidv1 from 'uuid/v1'
 import React from 'react'
 import {connect} from 'react-redux'
 
 import {
   sendNewPost,
-  fetchAllPosts
 } from '../actions'
 
 class NewPost extends React.Component {
@@ -28,7 +28,11 @@ class NewPost extends React.Component {
       this.setState({error: 'All fields are required.'})
       return
     }
-    this.props.submitPost(this.state)
+    this.props.submitPost({...this.state,
+         id: uuidv1(),
+         timestamp: Date.now(),
+         voteScore: 1
+       })
     this.setState({
       title: '',
       author: '',
@@ -65,11 +69,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => (
-      dispatch(sendNewPost(post)),
-      dispatch(fetchAllPosts())
-      //can't update redux state of posts in reducere to reduce api calls
-      // because server doesn't return anything on a new post creation
-      // If we had the post id, we could request just that post...
+      dispatch(sendNewPost(post))
+      // update redux state of posts in reducere to reduce api calls
+      // using new post object
   ),
   }
 }

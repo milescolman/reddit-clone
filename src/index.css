@@ -42,8 +42,8 @@ body, .app {
 .new-post {
     position: fixed;
     bottom: 0%;
-    left: 0%;
-    width: 100%;
+    left: 50%;
+    width: 50%;
     background: #ffa;
 }
 

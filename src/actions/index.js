@@ -57,7 +57,6 @@ export const sendNewPost = (post) => dispatch => (
 )
 
 export const confirmNewPost = (post) => (
-  console.log(post),
   {
   type: ADD_NEW_POST,
   post
@@ -164,8 +163,8 @@ export const confirmEditComment = (commentObj) => ({
 })
 
 export const deleteComment = ({id, parentId}) => dispatch => (
-  API.
-    deleteComment(id)
+  API
+    .deleteComment(id)
     .then(data => dispatch(confirmDeleteComment({id, parentId})))
 )
 

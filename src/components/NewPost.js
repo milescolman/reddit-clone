@@ -10,6 +10,7 @@ class NewPost extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      showEditor: false,
       title: '',
       author: '',
       category: 'Select a Category',
@@ -39,27 +40,46 @@ class NewPost extends React.Component {
       category: 'Select a Category',
       body: '',
       error: '',
+      showEditor: false 
     })
   }
 
-  render = () => (
-    <div className='new-post'>
-      <h3>New Post</h3>
-      {this.state.error ? <div className='error'>{this.state.error}</div> : ''}
-      <form onSubmit={this.handleSubmit}>
-        <label>Title: <input name="title" placeholder="post title" value={this.state.title} onChange={(event) => this.handleField(event, 'title')}/></label>
-        <label>Author: <input name="author" placeholder="your username" value={this.state.author} onChange={(event) => this.handleField(event, 'author')}/></label>
-        {/* Replace category select with autocomplete search later */}
-        <label>Category: <select defaultValue='Select a Category' value={this.state.category} onChange={(event) => this.handleField(event, 'category')}>
-          <option disabled>Select a Category</option>
-          {this.props.categories.map((cat, idx) => <option key={idx} value={cat}>{cat}</option>)}
-        </select>
-        </label>
-        <label>Body: <textarea name="body" placeholder="post body" value={this.state.body} onChange={(event) => this.handleField(event, 'body')}/></label>
-        <input type="submit" value="Submit" />
-      </form>
+  render = () => {
+    const displayState = this.state.showEditor ? 'inline' : 'none'
+    const buttonDisplayState = !this.state.showEditor ? 'inline': 'none'
+    const category = this.props.match.params.category
+    return (
+    <div className='new-post-container'>
+      <div className='new-post-button'
+        style={{display: buttonDisplayState}}
+        onClick={() => this.setState({showEditor: true})}
+      ><button><em>New Post</em></button></div>
+      <div className='new-post' style={{display: displayState}}>
+        {this.state.error ? <div className='error'>{this.state.error}</div> : ''}
+        <form>
+          <label>Title: <input name="title" placeholder="post title" value={this.state.title} onChange={(event) => this.handleField(event, 'title')}/></label>
+          <label>Author: <input name="author" placeholder="your username" value={this.state.author} onChange={(event) => this.handleField(event, 'author')}/></label>
+          {/* Replace category select with autocomplete search later */}
+          <label>Category: <select value={category || 'Select a Category'} onChange={(event) => this.handleField(event, 'category')}>
+            <option disabled>Select a Category</option>
+            {this.props.categories.map((cat, idx) => <option key={idx} value={cat}>{cat}</option>)}
+          </select>
+          </label>
+          <label>Body: <textarea name="body" placeholder="post body" value={this.state.body} onChange={(event) => this.handleField(event, 'body')}/></label>
+          <input type="submit" value="Submit" onClick={this.handleSubmit}/><button onClick={(event) => {
+            event.preventDefault()
+            this.setState({
+              showEditor: false,
+              title: '',
+              author: '',
+              category: 'Select a Category',
+              body: '',
+              error: '',
+            })}}>Cancel</button>
+        </form>
+      </div>
     </div>
-  )
+  )}
 }
 
 const mapStateToProps = (state) => ({

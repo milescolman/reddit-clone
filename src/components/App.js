@@ -13,9 +13,6 @@ import NotFound from './NotFound'
 import Posts from './Posts'
 import SinglePostWrapperWrapper from './SinglePostWrapperWrapper'
 import NewPost from './NewPost'
-import NewComment from './NewComment'
-import Comments from './Comments'
-import Comment from './Comment'
 
 class RedditApp extends React.Component {
 
@@ -29,8 +26,8 @@ class RedditApp extends React.Component {
               render={(props) => (
                 <div className='container'>
                   <Categories {...props}/>
+                  <NewPost {...props}/>
                   <Posts />
-                  <NewPost />
                 </div>
               )}
             />
@@ -61,8 +58,8 @@ class RedditApp extends React.Component {
               render={props => (
                 <div className='container'>
                   <Categories {...props}/>
+                  <NewPost {...props}/>
                   <Posts {...props}/>
-                  <NewPost />
                 </div>
               )}
             />

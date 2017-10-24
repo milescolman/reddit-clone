@@ -62,11 +62,12 @@ class Post extends React.Component{
               {this.props.title}
             </a>
           </div>
-          <div>
-            Submitted {moment(this.props.date).fromNow()} by {this.props.author}
+          <div className='submitted-info'>
+            Submitted {moment(this.props.date).fromNow()} by <strong>{this.props.author}</strong>
           </div>
           { this.props.body &&
             <div className='body'>
+              {/* add conditional body truncation here*/}
               > {this.props.body}
               <div className='post-button-bar'>
                 <FaCommentsO size={20}/> {this.props.commentTotal}

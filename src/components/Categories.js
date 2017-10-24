@@ -18,9 +18,9 @@ class Categories extends React.Component {
               {this.props.categories.map(({name}) => {
                 //protect against not passing url match prop to <Category /> by checking this.props.category alternative
                 if ((name === (this.props.match && this.props.match.params.category)) || (name === this.props.category)) {
-                  return (<li key={name} className='bold category'><a href={`/${name}/posts`}> {name}</a></li>)
+                  return (<li key={name} className='bold category'><a href={`/${name}/posts`}> {'#'+name}</a></li>)
                 } else {
-                  return (<li key={name} className='category'><a href={`/${name}/posts`}> {name}</a></li>)
+                  return (<li key={name} className='category'><a href={`/${name}/posts`}> {'#'+name}</a></li>)
                 }})}
             </ul>
           </div>

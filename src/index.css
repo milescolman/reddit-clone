@@ -127,6 +127,10 @@ a:hover, a:focus {
   font-weight: bold;
 }
 
+.submitted-info {
+  font-size: smaller;
+}
+
 .error {
   color: red;
 }

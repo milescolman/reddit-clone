@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Post from './Post'
 import {fetchAllPosts, fetchCategoryPosts} from '../actions'
+import NewPost from './NewPost'
 
 class Posts extends React.Component  {
   constructor(props) {
@@ -37,14 +38,14 @@ class Posts extends React.Component  {
   setSortToLikes = () => this.setState(() => ({sortFunction: 'likes'}))
   setSortToPosted = () => this.setState(() => ({sortFunction: 'posted'}))
   render () {
+    const undeletedPosts = this.props.posts.filter(({deleted}) => (!deleted))
     return (
     <div className='container'>
       <div className='sort-header'>
         Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
       </div>
       <ul className='post-list'>
-        { this.props.posts
-          .filter(({deleted}) => (!deleted))
+        { undeletedPosts.length > 0 ? undeletedPosts
           .sort(this.sortFunction)
           .map(({title, category, author, voteScore, timestamp, id, body, deleted}) => (
             // remove title below once posts all have id field set
@@ -59,9 +60,14 @@ class Posts extends React.Component  {
                   deleted={deleted}
                 />
               </li>
+          ))
+        :
+        <div>
+          <span>No posts yet. How bout adding one?</span>
+          <NewPost {...this.props} />
+        </div>
 
-          )
-          )}
+        }
       </ul>
     </div>
   )}

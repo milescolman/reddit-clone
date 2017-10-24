@@ -77,7 +77,9 @@ a:hover, a:focus {
 
 .post {
   padding-top: 10px;
+  width: 100%;
   max-width: 800px;
+  display: inline-block;
 }
 
 .post-button-bar {
@@ -89,12 +91,7 @@ a:hover, a:focus {
 }
 
 .new-post {
-    /*position: fixed;
-    bottom: 0%;
-    left: 0%;
-    width: 100%;*/
     background: #ffa;
-    /*height: 150px;*/
 }
 
 .new-post-button {
@@ -127,8 +124,4 @@ a:hover, a:focus {
 
 .bold {
   font-weight: bolder;
-}
-
-* {
-  border: 1px solid red;
 }

@@ -69,9 +69,9 @@ class Post extends React.Component{
             <div className='body'>
               > {this.props.body}
               <div className='post-button-bar'>
-                <FaCommentsO size={30}/> {this.props.commentTotal}
-                <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={20} /></button>
-                <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={20} /></button>
+                <FaCommentsO size={20}/> {this.props.commentTotal}
+                <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
+                <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
               </div>
               { this.state.modalEditOpen ?
                 <form className='edit-post-form' onSubmit={this.submitEdit}>

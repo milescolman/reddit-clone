@@ -14,25 +14,25 @@ class SinglePostWrapper extends React.Component {
 
   render = () => (
     <div className='container'>
-      {this.props.posts.map(({title, author, body, voteScore, category, timestamp}) => (
+      {
         <Post
-          title={title}
-          author={author}
-          body={body}
-          likes={voteScore}
-          category={category}
-          date={timestamp}
+          title={this.props.post.title}
+          author={this.props.post.author}
+          body={this.props.post.body}
+          likes={this.props.post.voteScore}
+          category={this.props.post.category}
+          date={this.props.post.timestamp}
           id={this.props.match.params.id}
-          key={this.props.match.params.id}
+          key={this.props.post.id}
         />
-      ))}
+      }
 
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
-  return {posts: state.posts}
+  return {post: state.posts[0]}
 }
 
 const mapDispatchToProps = (dispatch) => {

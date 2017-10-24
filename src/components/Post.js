@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import {Link} from 'react-router-dom'
 import FaAngleUp from 'react-icons/lib/fa/angle-up'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import FaTrashO from 'react-icons/lib/fa/trash-o'
@@ -58,9 +58,9 @@ class Post extends React.Component{
         </div>
         <div className='post-title'>
           <div>
-            <a href={`/posts/${this.props.id}`} className='postTitle'>
+            <Link to={`/posts/${this.props.id}`} className='postTitle'>
               {this.props.title}
-            </a>
+            </Link>
           </div>
           <div className='submitted-info'>
             Submitted {moment(this.props.date).fromNow()} by <strong>{this.props.author}</strong>
@@ -68,7 +68,7 @@ class Post extends React.Component{
           { this.props.body &&
             <div className='body'>
               {/* add conditional body truncation here*/}
-              > {this.props.body}
+              {this.props.body}
               <div className='post-button-bar'>
                 <FaCommentsO size={20}/> {this.props.commentTotal}
                 <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>

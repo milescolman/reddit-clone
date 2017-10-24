@@ -47,7 +47,7 @@ class NewPost extends React.Component {
   render = () => {
     const displayState = this.state.showEditor ? 'inline' : 'none'
     const buttonDisplayState = !this.state.showEditor ? 'inline': 'none'
-    const category = this.props.match.params.category
+    const category = this.props.match && this.props.match.params.category
     return (
     <div className='new-post-container'>
       <div className='new-post-button'

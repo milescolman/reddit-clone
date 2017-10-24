@@ -39,7 +39,9 @@ class Posts extends React.Component  {
   render () {
     return (
     <div className='container'>
-      Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
+      <div className='sort-header'>
+        Sort by <button className={this.state.sortFunction === 'posted' ? 'selected-btn' : ''} onClick={this.setSortToPosted}>Posted</button> <button className={this.state.sortFunction === 'likes' ? 'selected-btn' : ''} onClick={this.setSortToLikes}>Likes</button>
+      </div>
       <ul className='post-list'>
         { this.props.posts
           .filter(({deleted}) => (!deleted))

@@ -77,7 +77,7 @@ class Post extends React.Component{
                 <form className='edit-post-form' onSubmit={this.submitEdit}>
                   <label>Title: <input value={this.state.title} onChange={(event) => this.updateField(event, 'title')}/></label>
                   <label>Body: <input value={this.state.body} onChange={(event) => this.updateField(event, 'body')}/></label>
-                  <input type='submit' value='Submit'/>
+                  <input className='submit-button' type='submit' value='Submit'/>
                   <button onClick={this.setModalEditClosed}>Cancel</button>
                 </form>
               : ''}

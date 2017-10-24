@@ -40,7 +40,7 @@ class NewPost extends React.Component {
       category: 'Select a Category',
       body: '',
       error: '',
-      showEditor: false 
+      showEditor: false
     })
   }
 
@@ -66,7 +66,7 @@ class NewPost extends React.Component {
           </select>
           </label>
           <label>Body: <textarea name="body" placeholder="post body" value={this.state.body} onChange={(event) => this.handleField(event, 'body')}/></label>
-          <input type="submit" value="Submit" onClick={this.handleSubmit}/><button onClick={(event) => {
+          <input className="submit-button" type="submit" value="Submit" onClick={this.handleSubmit}/><button onClick={(event) => {
             event.preventDefault()
             this.setState({
               showEditor: false,

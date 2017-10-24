@@ -67,12 +67,17 @@ class Post extends React.Component{
           </div>
           { this.props.body &&
             <div className='body'>
-              {/* add conditional body truncation here*/}
-              {this.props.body}
+              {/* true at location /post/:id */}
+              {(this.props.id === (this.props.match && this.props.match.params.id)) ?
+              this.props.body :
+              <div>
+                {(this.props.body == this.props.body.substr(0,80)) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
+              </div>
+              }
               <div className='post-button-bar'>
-                <FaCommentsO size={20}/> {this.props.commentTotal}
-                <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
-                <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
+                    <FaCommentsO size={20}/> {this.props.commentTotal}
+                    <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
+                    <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
               </div>
               { this.state.modalEditOpen ?
                 <form className='edit-post-form' onSubmit={this.submitEdit}>

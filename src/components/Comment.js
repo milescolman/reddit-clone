@@ -34,21 +34,25 @@ class Comment extends React.Component {
 
     render = () => {
       return (
-        <div className='comment'>
-          <button>
+        <div >
+          <button title='vote comment up'>
             <FaAngleUp size={14}
               onClick={() => this.props.vote({id: this.props.id, parentId: this.props.parentId, option: 'upVote'})}
             />
           </button>
           {this.props.voteScore}
-          <button>
+          <button title='vote comment down'>
             <FaAngleDown size={14}
               onClick={() => this.props.vote({id: this.props.id, parentId: this.props.parentId, option: 'downVote'})}
             />
           </button>
-          {this.props.body} by {this.props.author} {moment(this.props.timestamp).fromNow()}
-          <button><FaEdit onClick={this.toggleCommentEditor} size={14}/></button>
-          <button><FaTrashO onClick={() => this.props.delete(this.props.id)} size={14}/></button>
+
+          {this.props.body} <span className='submitted-info'>by <strong>{this.props.author}</strong> {moment(this.props.timestamp).fromNow()}</span>
+
+          <div className='post-button-bar'>
+            <button title='edit comment'><FaEdit onClick={this.toggleCommentEditor} size={14}/></button>
+            <button title='delete comment'><FaTrashO onClick={() => this.props.delete(this.props.id)} size={14}/></button>
+          </div>
           {(this.state.showCommentEditor) ?
             <form onSubmit={this.submitForm}>
               <label>Comment Body: <input value={this.state.body} onChange={this.handleBody}/></label>

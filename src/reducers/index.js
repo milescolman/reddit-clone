@@ -64,11 +64,9 @@ function posts (state = [], action) {
 }
 function comments (state = {}, action) {
   switch (action.type) {
-    // need some comments to see how server-returned comments will be formatted
     case RECEIVE_POST_COMMENTS:
       const { comments } =  action
       return (comments.length > 0) ? {...state,  [comments[0].parentId]: comments} : state
-
     case CONFIRM_NEW_COMMENT:
       const { commentObj } = action
       return (state[commentObj.parentId]) ? { ...state,

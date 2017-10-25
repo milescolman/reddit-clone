@@ -21,17 +21,14 @@ class Post extends React.Component{
 
     this.state = {
       modalEditOpen: false,
+      title: this.props.title,
+      body: this.props.body,
     }
 
   }
 
   componentDidMount = () => { // fetch number of comments
     this.props.getCommentTotal(this.props.id)
-    // need to grab current title and body
-    this.setState({
-          title: this.props.title,
-          body: this.props.body, //need this body param all the tim   e
-        })
   }
   //arrow functions so don't need this bound in constructor. yay!
   setModalEditOpen = () => this.setState({modalEditOpen: true})
@@ -46,16 +43,16 @@ class Post extends React.Component{
 
   render  ()  {
     return (
-      <div className='post'>
+      <div className=''>
         <div className='likes'>
-          <button className='arrow'
+          <button className='arrow' title='vote post up'
             onClick={() => this.props.voteOnPost({id: this.props.id, option: 'upVote'})}>
             <FaAngleUp size={20} />
           </button>
           <div>
             {this.props.likes}
           </div>
-          <button className='arrow' onClick={() => this.props.voteOnPost({id: this.props.id, option: 'downVote'})}>
+          <button title='vote post down' className='arrow' onClick={() => this.props.voteOnPost({id: this.props.id, option: 'downVote'})}>
             <FaAngleDown size={20} />
           </button>
         </div>
@@ -77,10 +74,12 @@ class Post extends React.Component{
                 {(this.props.body.length <= 80) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
               </div>
               }
-              <div className='post-button-bar'>
+              <div className='post-comments'>
                 <FaCommentsO size={20}/> {this.props.commentTotal}
-                <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
-                <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
+              </div>
+              <div className='post-button-bar'>
+                <button title='edit post' className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
+                <button title='delete post' onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
               </div>
               { this.state.modalEditOpen ?
                 <form className='edit-post-form' onSubmit={this.submitEdit}>

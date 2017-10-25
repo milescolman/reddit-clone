@@ -49,7 +49,7 @@ class Posts extends React.Component  {
           .sort(this.sortFunction)
           .map(({title, category, author, voteScore, timestamp, id, body, deleted}) => (
             // remove title below once posts all have id field set
-              <li key={id || title}>
+              <li className='post' key={id || title}>
                 <Post
                   title={title}
                   author={author}
@@ -64,7 +64,7 @@ class Posts extends React.Component  {
         :
         <div>
           <span>No posts yet. How bout adding one?</span>
-          <NewPost {...this.props} />
+          <NewPost {...this.props} showEditor={true} />
         </div>
 
         }

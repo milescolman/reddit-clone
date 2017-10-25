@@ -21,15 +21,18 @@ class Post extends React.Component{
 
     this.state = {
       modalEditOpen: false,
-      title: this.props.title,
-      body: this.props.body, //need this body param all the tim   e
     }
 
   }
 
-  componentDidMount = () => ( // fetch number of comments
+  componentDidMount = () => { // fetch number of comments
     this.props.getCommentTotal(this.props.id)
-  )
+    // need to grab current title and body
+    this.setState({
+          title: this.props.title,
+          body: this.props.body, //need this body param all the tim   e
+        })
+  }
   //arrow functions so don't need this bound in constructor. yay!
   setModalEditOpen = () => this.setState({modalEditOpen: true})
   setModalEditClosed = () => this.setState({modalEditOpen: false})
@@ -71,13 +74,13 @@ class Post extends React.Component{
               {(this.props.id === (this.props.match && this.props.match.params.id)) ?
               this.props.body :
               <div>
-                {(this.props.body == this.props.body.substr(0,80)) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
+                {(this.props.body.length <= 80) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
               </div>
               }
               <div className='post-button-bar'>
-                    <FaCommentsO size={20}/> {this.props.commentTotal}
-                    <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
-                    <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
+                <FaCommentsO size={20}/> {this.props.commentTotal}
+                <button className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
+                <button onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
               </div>
               { this.state.modalEditOpen ?
                 <form className='edit-post-form' onSubmit={this.submitEdit}>

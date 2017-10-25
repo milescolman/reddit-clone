@@ -139,6 +139,6 @@ a:hover, a:focus {
   font-weight: bolder;
 }
 
-/** {
+* {
   border: 1px dashed red;
-}*/
+}

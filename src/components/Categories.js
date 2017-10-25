@@ -8,7 +8,6 @@ import {fetchCategories,
 
 class Categories extends React.Component {
   componentDidMount () {
-    console.log('categories reloaded')
     this.props.fetchCategories()
   }
 

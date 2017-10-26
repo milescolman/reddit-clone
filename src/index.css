@@ -70,6 +70,7 @@ a:hover, a:focus {
 
 .comment-list {
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .post,
@@ -78,6 +79,7 @@ a:hover, a:focus {
   border: 1px solid #bbb;
   width: 100%;
   max-width: 800px;
+  display: inline-block;;
 }
 
 .category-list {
@@ -145,6 +147,7 @@ a:hover, a:focus {
 .submitted-info {
   padding-left: 5px;
   font-size: smaller;
+  display: inline-block;
 }
 
 .error {
@@ -155,6 +158,6 @@ a:hover, a:focus {
   font-weight: bolder;
 }
 
-/** {
+* {
   border: 1px dashed red;
-}*/
+}

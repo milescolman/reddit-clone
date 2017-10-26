@@ -62,37 +62,39 @@ class Post extends React.Component{
               {this.props.title}
             </Link>
           </div>
+        </div>
+        <div>
+          <div className='post-comments'>
+            <FaCommentsO size={20}/> {this.props.commentTotal}
+          </div>
           <div className='submitted-info'>
             Submitted {moment(this.props.date).fromNow()} by <strong>{this.props.author}</strong>
           </div>
-          { this.props.body &&
-            <div className='body'>
-              {/* true at location /post/:id */}
-              {(this.props.id === (this.props.match && this.props.match.params.id)) ?
-              this.props.body :
-              <div>
-                {(this.props.body.length <= 80) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
-              </div>
-              }
-              <div className='post-comments'>
-                <FaCommentsO size={20}/> {this.props.commentTotal}
-              </div>
+        </div>
+        { this.props.body &&
+          <div className='body'>
+            {/* true at location /post/:id */}
+            {(this.props.id === (this.props.match && this.props.match.params.id)) ?
+            this.props.body :
+            <div>
+              {(this.props.body.length <= 80) ? this.props.body : (<div>{this.props.body.substr(0, 80)}... <Link to={`/posts/${this.props.id}`}>Read more</Link></div>)}
               <div className='post-button-bar'>
                 <button title='edit post' className='edit-post' onClick={this.toggleModalEdit}><FaEdit size={15} /></button>
                 <button title='delete post' onClick={() => this.props.deletePost(this.props.id)}><FaTrashO size={15} /></button>
               </div>
-              { this.state.modalEditOpen ?
-                <form className='edit-post-form' onSubmit={this.submitEdit}>
-                  <label>Title: <input value={this.state.title} onChange={(event) => this.updateField(event, 'title')}/></label>
-                  <label>Body: <input value={this.state.body} onChange={(event) => this.updateField(event, 'body')}/></label>
-                  <input className='submit-button' type='submit' value='Submit'/>
-                  <button onClick={this.setModalEditClosed}>Cancel</button>
-                </form>
-              : ''}
             </div>
-          }
+            }
+            { this.state.modalEditOpen ?
+              <form className='edit-post-form' onSubmit={this.submitEdit}>
+                <label>Title: <input value={this.state.title} onChange={(event) => this.updateField(event, 'title')}/></label>
+                <label>Body: <input value={this.state.body} onChange={(event) => this.updateField(event, 'body')}/></label>
+                <input className='submit-button' type='submit' value='Submit'/>
+                <button onClick={this.setModalEditClosed}>Cancel</button>
+              </form>
+            : ''}
+          </div>
+        }
 
-        </div>
       </div>
     )
     }

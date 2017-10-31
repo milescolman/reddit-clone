@@ -57,6 +57,7 @@ class Posts extends React.Component  {
                   date={timestamp}
                   id={id}
                   body={body}
+                  category={category}
                   deleted={deleted}
                 />
               </li>

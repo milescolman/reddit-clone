@@ -17,6 +17,13 @@ function postsReducer (state = [], action) {
     case RECEIVE_ALL_POSTS:
     case RECEIVE_POST: //wrong? this needs its own handler ?
       const { posts } = action
+      if (posts[0] && posts[0].error) {
+        return [
+          {
+            deleted: true,
+          }
+        ]
+      }
       return [
         ...posts
       ]

@@ -22,8 +22,7 @@ class SinglePostWrapperWrapper extends React.Component {
     } else if (Object.keys(matchingPost[0]).length === 0 && matchingPost[0].constructor === Object) {
       return (<Redirect to={'/posts'} />)
     } else if (matchingPost[0].deleted ) {
-      console.log('redirecting because post is deleted')
-      return  (<Redirect to={`/${matchingPost[0].category}/posts`} />)
+      return  (<NotFound />)
     } else {
       return (
         <div className='container'>
@@ -39,6 +38,7 @@ class SinglePostWrapperWrapper extends React.Component {
                 date={matchingPost[0].timestamp}
                 id={matchingPost[0].id}
                 body={matchingPost[0].body}
+                category={matchingPost[0].category}
                 deleted={matchingPost[0].deleted}
               />
               <Comments {...this.props}/>

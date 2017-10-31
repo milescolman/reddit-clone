@@ -9,13 +9,13 @@ import {
 } from '../actions'
 
 
-// data from API is  already normalized, don't need normalizr
+// todo: normalize data from API
 
 function postsReducer (state = [], action) {
   switch (action.type) {
     case RECEIVE_CATEGORY_POSTS:
     case RECEIVE_ALL_POSTS:
-    case RECEIVE_POST: //wrong? this needs its own handler ?
+    case RECEIVE_POST:
       const { posts } = action
       if (posts[0] && posts[0].error) {
         return [
